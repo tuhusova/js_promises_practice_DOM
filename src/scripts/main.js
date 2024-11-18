@@ -21,8 +21,8 @@ const secondPromise = new Promise((resolve) => {
   document.body.addEventListener('click', (ev) => {
     if (ev.button === 0) {
       leftClickDetected = true;
+      resolve('Second promise was resolved');
     }
-    resolve('Second promise was resolved');
   });
 
   document.body.addEventListener('contextmenu', (ev) => {
@@ -65,12 +65,15 @@ const handleSuccess = (message) => {
   document.body.append(div);
 };
 
-const handleError = (message) => {
+const handleError = (error) => {
   const div = document.createElement('div');
 
   div.setAttribute('data-qa', 'notification');
   div.className = 'error';
-  div.textContent = message;
+
+  const errorMessage = error instanceof Error ? error.message : error;
+
+  div.textContent = errorMessage;
   document.body.append(div);
 };
 
